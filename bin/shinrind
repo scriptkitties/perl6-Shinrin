@@ -1,0 +1,37 @@
+#! /usr/bin/env perl6
+
+use v6.c;
+
+use Bailador;
+use Config;
+use Config::Parser::toml;
+use Shinrin::Controllers::V1;
+use Shinrin::Defaults;
+
+sub MAIN
+{
+	my Config $config .= new;
+
+	# Set configuration defaults
+	$config.read(Shinrin::Defaults.config);
+
+	# Load user-specified configuration
+	my Str @config-files = (
+		"/etc/musashi.toml",
+		"/usr/local/etc/musashi.toml",
+	);
+
+	$config.read(@config-files, skip-not-found => True);
+
+	# Load all API endpoints
+	post "/v1/store" => sub { Shinrin::Controllers::V1.new(config => $config).store(json => from-json(request.body)); };
+
+	config.host = "127.1";
+
+	# Configure Bailador
+	set("host", $config.get("bind.ip"));
+	set("port", $config.get("bind.port"));
+
+	# Time to dance
+	baile();
+}

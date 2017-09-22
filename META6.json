@@ -1,0 +1,34 @@
+{
+    "perl": "6",
+    "name": "Shinrin",
+    "version": "0.0.1",
+    "auth": "github:scriptkitties",
+    "description": "Centralized log system",
+    "license": "GPL-3.0",
+    "depends": [
+        "BSON::Document",
+        "Bailador",
+        "Config",
+        "Config::Parser::toml",
+        "JSON::Fast",
+        "MongoDB::Client",
+        "MongoDB::Collection",
+        "MongoDB::Database"
+    ],
+    "provides": {
+        "shinrind": "bin/shinrind.pl6",
+        "Shinrin::Defaults": "lib/Shinrin/Defaults.pm6",
+        "Shinrin::Controllers::V1": "lib/Shinrin/Controllers/V1.pm6"
+    },
+    "authors": [
+        "Patrick Spek <p.spek@tyil.work>"
+    ],
+    "tags": [
+        "log",
+        "logging"
+    ],
+    "test-depends": [
+        "Test::META"
+    ],
+    "source-url": "https://github.com/scriptkitties/shinrin.git"
+}

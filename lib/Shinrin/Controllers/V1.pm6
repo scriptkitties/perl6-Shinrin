@@ -5,13 +5,13 @@ use v6.c;
 use BSON::Document;
 use Config;
 use JSON::Fast;
-use MongoDB::Client;
 use MongoDB::Collection;
 use MongoDB::Database;
 
 class Shinrin::Controllers::V1
 {
 	has Config $.config;
+	has MongoDB::Database $.database;
 
 	method store(:%json)
 	{
@@ -48,10 +48,6 @@ class Shinrin::Controllers::V1
 			});
 		}
 
-		# Connect to MongoDB
-		my MongoDB::Client $client .= new(:uri($!config.get("database.connection")));
-		my MongoDB::Database $database = $client.database($!config.get("database.database"));
-
 		# Create the new document to insert
 		my BSON::Document $doc .= new((|%data));
 
@@ -62,7 +58,7 @@ class Shinrin::Controllers::V1
 		));
 
 		# Push document to the mongodb server
-		my BSON::Document $response = $database.run-command($insert);
+		my BSON::Document $response = $!database.run-command($insert);
 
 		# Check for errors
 		if (!$response<ok>) {

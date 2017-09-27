@@ -15,12 +15,28 @@ then
 fi
 
 # Vars for script use only
+name="shinrin"
 command="${SHINRIN_PATH}/bin/shinrind-start"
 command_args="\"${PERL_PATH}\""
 command_user="${SHINRIN_USER}"
 pidfile="/var/run/shinrin/shinrind.pid"
+piddir="$(dirname -- "${pidfile}")"
 description="A centralized log gatherer"
 
 depend() {
 	use mongodb
+}
+
+start_pre() {
+	mkdir -p "${piddir}"
+	chown "${SHINRIN_USER}" "${piddir}"
+}
+
+stop() {
+	ebegin "Stopping ${name}"
+
+	pkill -F "${pidfile}"
+	rm -r "${piddir}"
+
+	eend $?
 }

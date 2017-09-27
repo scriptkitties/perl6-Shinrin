@@ -1,9 +1,16 @@
 #! /usr/bin/env sh
 
 readonly DIR=$(CDPATH="" cd -- "$(dirname -- "$0")" && pwd)
+readonly PIDFILE="/var/run/shinrin/shinrind.pid"
 
 main()
 {
+	if [ -e "${PIDFILE}" ]
+	then
+		echo -- "Shinrin is already running as $(cat "${PIDFILE}")" >2
+		exit 2
+	fi
+
 	if ! cd "${DIR}/.."
 	then
 		echo "Failed to cd"
@@ -12,7 +19,9 @@ main()
 
 	perl=${1-perl6}
 
-	"${perl}" -Ilib "bin/shinrind" > /dev/null 2>&1
+	"${perl}" -Ilib "bin/shinrind" > /dev/null 2>&1 &
+
+	echo "$!" > "${PIDFILE}"
 }
 
-main "$@" &
+main "$@"

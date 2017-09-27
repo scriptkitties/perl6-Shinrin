@@ -1,7 +1,11 @@
 = Shinrin
-:toc:
 :preamble:
-:icons: font
+:toc:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
 
 Shinrin is a centralized logging system written in Perl 6. 
 

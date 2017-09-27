@@ -6,7 +6,7 @@ class Shinrin::Defaults
 {
 	my Hash $.config = {
 		shinrin => {
-			debug => True,
+			debug => False,
 		},
 		database => {
 			connection => "mongodb://127.1",

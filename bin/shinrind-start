@@ -7,7 +7,7 @@ main()
 {
 	if [ -e "${PIDFILE}" ]
 	then
-		echo -- "Shinrin is already running as $(cat "${PIDFILE}")" >2
+		printf -- "Shinrin is already running as %d\n" "$(cat "${PIDFILE}")" >&2
 		exit 2
 	fi
 

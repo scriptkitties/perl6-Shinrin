@@ -34,8 +34,8 @@ sub MAIN
 	post "/v1/store" => sub { Shinrin::Controllers::V1.new(:$config, :$database).store(json => from-json(request.body)); };
 
 	# Configure Bailador
-	set("host", $config.get("bind.ip"));
-	set("port", $config.get("bind.port"));
+	set("host", $config.get("shinrin.bind-ip"));
+	set("port", $config.get("shinrin.bind-port"));
 
 	# Time to dance
 	baile();

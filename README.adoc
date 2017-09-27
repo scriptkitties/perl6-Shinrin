@@ -88,7 +88,7 @@ to always create a configuration file.
 ----
 [shinrin]
 debug = false
-bind-ip = "0.0.0.0"
+bind-ip = "127.1"
 bind-port = 17344
 
 [database]

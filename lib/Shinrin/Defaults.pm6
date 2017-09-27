@@ -7,14 +7,12 @@ class Shinrin::Defaults
 	my Hash $.config = {
 		shinrin => {
 			debug => False,
+			bind-ip => "127.1",
+			bind-port => 17344,
 		},
 		database => {
 			connection => "mongodb://127.1",
 			database => "shinrin",
 		},
-		bind => {
-			ip => "127.1",
-			port => 17344,
-		}
 	};
 }

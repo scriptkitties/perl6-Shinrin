@@ -1,0 +1,42 @@
+#! /sbin/openrc-run
+# vim: ft=gentoo-init-d:
+
+readonly CONFPATH="/etc/conf.d/shinrin"
+
+# Set defaults
+SHINRIN_PATH="/opt/shinrin"
+SHINRIN_USER="root"
+PERL_PATH="perl6"
+
+# Load overriding config if it exists
+if [ -f "${CONFPATH}" ]
+then
+	source "${CONFPATH}"
+fi
+
+# Vars for script use only
+name="shinrin"
+command="${SHINRIN_PATH}/bin/shinrind-start"
+command_args="\"${PERL_PATH}\""
+command_user="${SHINRIN_USER}"
+pidfile="/var/run/shinrin/shinrind.pid"
+piddir="$(dirname -- "${pidfile}")"
+description="A centralized log gatherer"
+
+depend() {
+	use mongodb
+}
+
+start_pre() {
+	mkdir -p "${piddir}"
+	chown "${SHINRIN_USER}" "${piddir}"
+}
+
+stop() {
+	ebegin "Stopping ${name}"
+
+	pkill -F "${pidfile}"
+	rmdir "${piddir}"
+
+	eend $?
+}

@@ -10,6 +10,10 @@ use MongoDB::Collection;
 use MongoDB::Database;
 use Shinrin::Controllers::V1;
 use Shinrin::Defaults;
+use Shinrin::Pidfile;
+
+signal(SIGTERM).tap: { cleanup-pidfile };
+signal(SIGKILL).tap: { cleanup-pidfile };
 
 sub MAIN
 {

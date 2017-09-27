@@ -36,7 +36,7 @@ stop() {
 	ebegin "Stopping ${name}"
 
 	pkill -F "${pidfile}"
-	rm -r "${piddir}"
+	rmdir "${piddir}"
 
 	eend $?
 }

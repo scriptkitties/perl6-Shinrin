@@ -98,13 +98,13 @@ Generally, you'd like your logging system to be available at all times, so you
 should have it as a service. This makes it able to autostart with other system
 services.
 
-[NOTE]
+[TIP]
 ====
 If your favourite service manager is not documented here, please consider
 contributing.
 ====
 
-ERROR: This is on the TODO list
+IMPORTANT: This is on the TODO list
 
 == Using Shinrin
 Use your system's service manager to start up Shinrin.

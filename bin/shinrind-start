@@ -12,7 +12,7 @@ main()
 
 	perl=${1-perl6}
 
-	"${perl}" -Ilib "bin/shinrind"
+	"${perl}" -Ilib "bin/shinrind" > /dev/null 2>&1
 }
 
 main "$@" &

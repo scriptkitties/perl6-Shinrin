@@ -107,14 +107,35 @@ If your favourite service manager is not documented here, please consider
 contributing.
 ====
 
-IMPORTANT: This is on the TODO list
+==== OpenRC
+To get Shinrin available as OpenRC service, symlink the file from `etc/openrc`
+to `/etc/init.d/shinrin`. If you cloned Shinrin to a directory other than
+`/opt`, you should set the `SHINRIN_PATH` in `/etc/conf.d/shinrin`.
+
+[source]
+----
+# ln -s /opt/shinrin/etc/openrc /etc/conf.d/shinrin
+# rc-update add shinrin default
+----
+
+You can set the following init configuration variables in `/etc/conf.d/shinrin`
+if you need to change things around. Their default values are also given here.
+
+[source,sh]
+----
+SHINRIN_PATH="/opt/shinrin" # The path to the shinrin repository.
+PERL_PATH="perl6"           # The name of the Perl 6 binary as it exists in
+                            # your $PATH. If it's not available in your $PATH,
+                            # you can set an absolute path instead.
+PERL_ARGS=""                # Additional arguments to pass to `perl6`.
+----
 
 == Using Shinrin
 Use your system's service manager to start up Shinrin.
 
 [source]
 ----
-service shinrin start
+# service shinrin start
 ----
 
 Shinrin should now be up and running at the IP and port set in the

@@ -25,3 +25,8 @@ description="A centralized log gatherer"
 depend() {
 	use mongodb
 }
+
+start_pre() {
+	# Change exec dir
+	cd /tmp
+}

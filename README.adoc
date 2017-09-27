@@ -125,7 +125,7 @@ worker to parse logs for you, it would be a waste not to use pre-existing
 workers. Following is a list with (known) existing workers you can start using
 immediatly:
 
-- `Shinrin::Worker::Nginx` (nginx access logs)
+- https://github.com/scriptkitties/perl6-Shinrin-Worker-Nginx[`Shinrin::Worker::Nginx`] (nginx access logs)
 
 === Frontends
 At the time of writing, there are no frontends to view your Shinrin data.

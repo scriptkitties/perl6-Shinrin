@@ -7,7 +7,6 @@ readonly CONFPATH="/etc/conf.d/shinrin"
 SHINRIN_PATH="/opt/shinrin"
 SHINRIN_USER="root"
 PERL_PATH="perl6"
-PERL_ARGS=""
 
 # Load overriding config if it exists
 if [ -f "${CONFPATH}" ]
@@ -16,17 +15,12 @@ then
 fi
 
 # Vars for script use only
-command="${PERL_PATH}"
-command_args="-I \"${SHINRIN_PATH}/lib\" ${PERL_ARGS} ${SHINRIN_PATH}/bin/shinrind"
+command="${SHINRIN_PATH}/bin/shinrind-start"
+command_args="\"${PERL_PATH}\""
 command_user="${SHINRIN_USER}"
 pidfile="/var/run/shinrin/shinrind.pid"
 description="A centralized log gatherer"
 
 depend() {
 	use mongodb
-}
-
-start_pre() {
-	# Change exec dir
-	cd /tmp
 }

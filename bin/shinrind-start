@@ -1,0 +1,18 @@
+#! /usr/bin/env sh
+
+readonly DIR=$(CDPATH="" cd -- "$(dirname -- "$0")" && pwd)
+
+main()
+{
+	if ! cd "${DIR}/.."
+	then
+		echo "Failed to cd"
+		exit 1
+	fi
+
+	perl=${1-perl6}
+
+	"${perl}" -Ilib "bin/shinrind"
+}
+
+main "$@" &

@@ -124,9 +124,13 @@ if you need to change things around. Their default values are also given here.
 [source,sh]
 ----
 SHINRIN_PATH="/opt/shinrin" # The path to the shinrin repository.
+
+SHINRIN_USER="root"         # The user to run Shinrin as.
+
 PERL_PATH="perl6"           # The name of the Perl 6 binary as it exists in
                             # your $PATH. If it's not available in your $PATH,
                             # you can set an absolute path instead.
+
 PERL_ARGS=""                # Additional arguments to pass to `perl6`.
 ----
 

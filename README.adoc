@@ -1,0 +1,138 @@
+= Shinrin
+:toc:
+:preamble:
+
+Shinrin is a centralized logging system written in Perl 6. 
+
+== Rationale
+It's inception came after finding existing solutions to centralized logging to
+be very heavy and cumbersome to setup. Shinrin is a simple collection of Perl 6
+scripts, each dealing with their own type of logs, and the main `shinrind`, to
+store them all in a MongoDB database.
+
+=== Why Perl 6
+Perl 6 comes with a very powerful grammar system, making it easy to parse
+logfiles and convert them into a format that can be stored for easy indexing.
+In addition, I have found Perl 6 to be a very nice language to work with in
+general, and I want to get more experienced at it.
+
+=== Why MongoDB
+A NoSQL database would be the easiest for this purpose, since there are no
+defined schemas you have to setup for each log type. This makes starting with
+Shinrin easier and less effort.
+
+Additionally, the data stored doesn't relate across tables. In-table relations
+with logs aren't common either, so the overhead of a RDBMS seems pointless.
+
+While there are many NoSQL backends, some of which might be arguably better for
+this task, I could only find a MongoDB module for Perl 6 that was usable at the
+time I started on this project. In the future, MongoDB might be replaced with a
+different database.
+
+== Setting up Shinrin
+=== System dependencies
+First, install all dependencies for Shinrin. A list of dependencies is given
+below, you should use your system's package manager of choice to install them.
+
+- https://git-scm.com/[git]
+- https://www.mongodb.com/[MongoDB]
+- https://perl6.org/[Perl 6]
+
+=== Clone the Shinrin repository
+Clone the Shinrin repository into `/opt` using `git`. Any other path should be
+fine too, just make sure you remember the path for setting up the init scripts
+later on.
+
+[source]
+----
+# git clone https://github.com/scriptkitties/perl6-Shinrin /opt/shinrin
+----
+
+=== Install Shinrin Perl 6 dependencies
+The Perl 6 module manager of choice these days is
+https://github.com/ugexe/zef[zef]. If you used a Perl 6 distribution which
+already contains this, you don't have to do anything special. If not, make sure
+you get `zef` installed.
+
+Once `zef` has been installed, `cd` into the Shinrin directory and install all
+dependencies:
+
+[source]
+----
+# cd /opt/shinrin
+# zef install .
+----
+
+=== Configuring Shinrin
+Shinrin uses `toml` files for configuration. These configuration files are
+loaded, in order:
+
+- `/etc/shinrin.toml`
+- `/usr/local/etc/shinrin.toml`
+
+`toml` files can have sections, each module dealing with a kind of log will be
+configured in its own section. Next is a small sample with default values. If
+the defaults look good to you, you don't have to set them.
+
+[NOTE]
+====
+New releases could potentially change some of these defaults, so you are advised
+to always create a configuration file.
+====
+
+[source,toml]
+----
+[shinrin]
+debug = false
+bind-ip = "0.0.0.0"
+bind-port = 17344
+
+[database]
+connection = "mongodb://127.1"
+database = "shinrin"
+----
+
+=== Adding Shinrin as a startup service
+Generally, you'd like your logging system to be available at all times, so you
+should have it as a service. This makes it able to autostart with other system
+services.
+
+[NOTE]
+====
+If your favourite service manager is not documented here, please consider
+contributing.
+====
+
+ERROR: This is on the TODO list
+
+== Using Shinrin
+Use your system's service manager to start up Shinrin.
+
+[source]
+----
+service shinrin start
+----
+
+Shinrin should now be up and running at the IP and port set in the
+configuration file. Now you can add Shinrin workers on the clients to parse
+logfiles and pass on the data to Shinrin, which will store them in the
+database.
+
+=== Workers
+Workers are the scripts that run on the clients that are sending logs to the
+main Shinrin service.  While it should be pretty easy to create a Shinrin
+worker to parse logs for you, it would be a waste not to use pre-existing
+workers. Following is a list with (known) existing workers you can start using
+immediatly:
+
+- `Shinrin::Worker::Nginx` (nginx access logs)
+
+=== Frontends
+At the time of writing, there are no frontends to view your Shinrin data.
+
+== Contributing
+All contributions are welcome. Feel free to create issues, fork the repository
+and submit patches to improve Shinrin for all!
+
+== License
+Shinrin is licensed under the GNU GPL version 3 or later.

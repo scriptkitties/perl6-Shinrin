@@ -1,0 +1,25 @@
+#! /sbin/openrc-run
+# vim: ft=gentoo-init-d:
+
+readonly CONFPATH="/etc/conf.d/shinrin"
+
+# Set defaults
+SHINRIN_PATH="/opt/shinrin"
+PERL_PATH="perl6"
+PERL_ARGS=""
+
+# Load overriding config if it exists
+if [ -f "${CONFPATH}" ]
+then
+	source "${CONFPATH}"
+fi
+
+# Vars for script use only
+command="${PERL_PATH}"
+command_args="-I \"${SHINRIN_PATH}/lib\" ${PERL_ARGS} ${SHINRIN_PATH}/bin/shinrind"
+pidfile="/var/run/shinrin/shinrind.pid"
+description="A centralized log gatherer"
+
+depend() {
+	use mongodb
+}

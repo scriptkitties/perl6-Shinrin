@@ -20,8 +20,8 @@ sub MAIN
 
 	# Load user-specified configuration
 	my Str @config-files = (
-		"/etc/musashi.toml",
-		"/usr/local/etc/musashi.toml",
+		"/etc/shinrin.toml",
+		"/usr/local/etc/shinrin.toml",
 	);
 
 	$config.read(@config-files, skip-not-found => True);
